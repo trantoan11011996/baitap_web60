@@ -32,5 +32,5 @@ car_KIA.speed = 90
 console.log(`${car_KIA.type} have a speed is ${car_KIA.speed}km/h`)
 car_KIA.accelerate()
 car_KIA.brake()
-const arr = []
+
 

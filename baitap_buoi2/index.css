@@ -1,0 +1,23 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+form{
+    margin-top: 15px;
+}
+form input{
+    outline: none;
+}
+button{
+    cursor: pointer;
+}
+ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}

@@ -9,12 +9,12 @@ router.post("/",function(req,res){
   const {error}  = validateUser(req.body)
   if(error) return res.status(404).send(error.details[0].message)
   const user = new usersModel()
-  user.name = req.body.name,
-  user.age = req.body.age,
-  user.address = req.body.address,
-  user.gender = req.body.gender,
-  user.phone = req.body.phone,
-  user.email = req.body.email,
+  user.name = body.name,
+  user.age = body.age,
+  user.address = body.address,
+  user.gender = body.gender,
+  user.phone = body.phone,
+  user.email = body.email,
 
   user.save((err,user)=>{
     if(err){
@@ -42,12 +42,12 @@ router.get('/',function(req,res){
 
 // update base on id user
 router.put('/id/:id',function(req,res){
+  const query = req.body.query
   usersModel.findByIdAndUpdate({
     _id : req.params.id
   },
-  {
-   name : req.body.name 
-  },
+  query,
+  {new : true},
   function(err,user){
     if(err){
       res.send(err)
@@ -59,12 +59,12 @@ router.put('/id/:id',function(req,res){
 })
 // update base on phone user
 router.put('/phone/:phone',function(req,res){
+  const query = req.body.query
   usersModel.findByIdAndUpdate({
     phone : req.params.phone
   },
-  {
-   name : req.body.name 
-  },
+  query,
+  {new : true},
   function(err,user){
     if(err){
       res.send(err)

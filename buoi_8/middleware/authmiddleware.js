@@ -18,7 +18,7 @@ function authMiddleware(req,res,next){
      
     } 
     catch(err){
-        res.send('err',err)
+        res.send('sai token')
     }
 }
 

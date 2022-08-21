@@ -59,11 +59,10 @@ router.put('/id/:id',function(req,res){
 })
 // update base on phone user
 router.put('/phone/:phone',function(req,res){
-  const query = req.body.query
   usersModel.findByIdAndUpdate({
     phone : req.params.phone
   },
-  query,
+  req.body,
   {new : true},
   function(err,user){
     if(err){

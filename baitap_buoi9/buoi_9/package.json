@@ -13,11 +13,11 @@
     "express": "~4.16.1",
     "express-async-handler": "^1.2.0",
     "http-errors": "~1.6.3",
-    "jade": "^1.9.2",
+    "jade": "^0.29.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.1",
     "morgan": "~1.9.1",
-    "seeder": "^0.2.4"
+    "seeder": "^0.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

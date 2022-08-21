@@ -1,49 +1,49 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
-
-const orderSchema = mongoose.Schema({
-    user: { type : Schema.Types.ObjectId, ref: "User" },
-    orderItem : [
-       {
+const Item = mongoose.Schema({
+        qty : {
+            type : Number,
+            required : true,
+            default : 0
+        },
         name : {
             type : String,
             require : true,
         },
-        qty : {
-            type : Number,
-            require : true
-        },
         image : {
             type : String,
-            require : true
+            require : true,
         },
         price : {
-            type : Number,
-            require : true
-        },
-        product : {type : Schema.Types.ObjectId, ref : "Product"}    
-       }
-    ],
-    shippingAddress : {
-        address : {
             type : String,
             require : true
         },
-        city : {
-            type : String,
-            require : true
-        },
-        postalCode : {
-            type : String,
-            require : true
-        },
-    },
+        product : {type : Schema.Types.ObjectId, ref : "Product"}
+})
+const orderSchema = mongoose.Schema({
+    user: { type : Schema.Types.ObjectId, ref: "User" },
+    orderItem : [Item],
+    // shippingAddress : {
+    //     address : {
+    //         type : String,
+    //         required : true  
+    //     },
+    //     city : {
+    //         type : String,
+    //         required : true
+    //     },
+    //     postalCode : {
+    //         type : String,
+    //         required : true
+    //     },
+    // },
     paymentResult : {
         id : {
             type : String,
         },
         status : {
-          type : String  
+          type : Boolean,
+          default : false  
         },
         emmail_address : {
             type : String,
@@ -52,27 +52,27 @@ const orderSchema = mongoose.Schema({
             type : String
         }
     },
-    paymentMethod : {
-        type : String,
-        require : true
-    },
-    shippingPrice : {
-        type : Number,
-        require : true
-    },
-    totalPrice : {
-        type : Number,
-        require : true
-    },
-    isPaid : {
-        type : Boolean,
-        default : false,
-        require : true
-    }
+    // paymentMethod : {
+    //     type : String,
+    //     required : true
+    // },
+    // shippingPrice : {
+    //     type : Number,
+    //     required : true
+    // },
+    // totalPrice : {
+    //     type : Number,
+    //     required : true
+    // },
+    // isPaid : {
+    //     type : Boolean,
+    //     default : false,
+    //     required : true
+    // }
 })
 
 
 
 
-const Orders = mongoose.model('Review',orderSchema)
+const Orders = mongoose.model('Order',orderSchema)
 module.exports = Orders

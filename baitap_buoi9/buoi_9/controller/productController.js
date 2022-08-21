@@ -24,21 +24,14 @@ const getProduct = asyncHandler(async function (req, res) {
 
 // get product by id
 const getProductID = asyncHandler(async function (req, res) {
-    console.log(mongoose.Types.ObjectId.isValid(req.params.id))
-    try {
-        const product = await Product.findById(req.params.id).populate('review')
-        if (product) {
-            res.json(product)
-        } else {
-            res.status(400)
-            res.json({
-                message: "product can not found"
-            })
-        }
-    } catch (err) {
-        res.status(400)
-        throw new Error(err)
-    }
+   const product = await Product.findById(req.params.id)
+   if(product){
+    res.json(product)
+   }
+   else{
+    res.status(400)
+    throw new Error('product not found')
+   }
 })
 
 // delete product by Id
@@ -58,7 +51,7 @@ const deleteProductById = asyncHandler(async function (req, res) {
 
 //create product
 const createProduct = asyncHandler(async function (req, res) {
-    const user = await User.findOne(req.userInfo._id)
+    const user = await User.findById(req.userInfo._id)
     if (user) {
         const newProduct = await Product.create(req.body)
         const productInfo = await newProduct.populate('user')
@@ -89,7 +82,12 @@ const updateProductByid = asyncHandler(async function (req, res) {
     }
 })
 
-
+const sortProduct = asyncHandler(async(req,res)=>{
+    const sort = await Product.find({})
+    .sort({rating : "desc"})
+    .limit(5)
+    res.json(sort)
+})
 
 
 module.exports = {
@@ -98,5 +96,6 @@ module.exports = {
     getProductID,
     deleteProductById,
     updateProductByid,
+    sortProduct
 }
 

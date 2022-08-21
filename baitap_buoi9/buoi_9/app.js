@@ -36,7 +36,7 @@ app.use("/api/order",orderRouter)
 app.use(function(req, res, next) {
   next(createError(404));
 });
-app.use(errHandle)
+// app.use(errHandle)
 // error handler
 // app.use(function(err, req, res, next) {
 //   // set locals, only providing error in development

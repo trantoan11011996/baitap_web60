@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { Schema } = mongoose
+const  Schema  = mongoose
 
 const productSchema = mongoose.Schema({
     user: { type: Schema.Types.ObjectId, ref: "User" },
@@ -26,11 +26,13 @@ const productSchema = mongoose.Schema({
     rating: {
         type: Number,
         require:true,
+        default : 0,
     },
     review : [{type : Schema.Types.ObjectId, ref : "Review"}],
     numReview : {
         type : Number,
-        require : true
+        require : true,
+        default : 0,
     },
     countInStock : {
         type : Number,

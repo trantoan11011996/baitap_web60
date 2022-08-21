@@ -3,6 +3,7 @@
 const Reviews = require('../model/reviewModel')
 const Product = require('../model/productModel')
 const asyncHandler = require('express-async-handler');
+const User = require('../model/userModel');
 
 
 
@@ -11,11 +12,11 @@ const reviewArr = []
 const postReview = asyncHandler(async function (req, res) {
     const review = await (await Reviews.create(req.body)).populate('user')
     reviewArr.push(review)
-    console.log("review arr",reviewArr)
     try {
         const reviewProduct = review.product
         const productId = reviewProduct._id
-        const product = await Product.findOne(productId)
+        const product = await Product.findById(productId)
+        console.log('product',product)
         if (product) {
             product.review.push(review)
             const updateReviewProduct = await product.save()
@@ -41,8 +42,24 @@ const postReview = asyncHandler(async function (req, res) {
     }
 })
 
+const getReview = asyncHandler(async(req,res)=>{
+    const review = await Reviews.findById(req.params.id)
+    if(review){
+        const user = await User.findById(review.user)
+        res.json({
+            review,
+            user
+        })
+    }
+    else{
+        res.status(400)
+        throw new Error('review not found')
+    }
+})
 
 
-
-module.exports = postReview
+module.exports = {
+    postReview,
+    getReview
+}
 

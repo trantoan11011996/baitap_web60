@@ -15,7 +15,7 @@ import {
 } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 
-export default function ManagerMember({confirmDelete,cancelDelete,setName,setAge,setGender,setAddress,setDecription,setPhone,setHobby,handleCreateUser}) {
+export default function ManagerMember({deleteAll,cancelDelete,setName,setAge,setGender,setAddress,setDecription,setPhone,setHobby,handleCreateUser}) {
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function ManagerMember({confirmDelete,cancelDelete,setName,setAge
             <Col>
               <Popconfirm
                 title="Are you sure to delete all member?"
-                onConfirm={confirmDelete}
+                onConfirm={deleteAll}
                 onCancel={cancelDelete}
                 okText="Yes"
                 cancelText="No"

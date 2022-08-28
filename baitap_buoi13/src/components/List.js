@@ -2,29 +2,43 @@ import { Form, List } from "antd";
 import React, { useState } from "react";
 import ListUser from "./ListUser";
 import {Row,Col} from "antd"
-export default function ListRender({data,removeItem}) {
-    const [filterData,setFilterData] = useState(data)
+import {notification} from 'antd'
+import { dataUsers } from "../person";
+
+export default function ListRender({setDataUser,data}) {
+    // const handleFIlter = (event)=>{
+    //     const searchWord = event
     
-    const handleFIlter = (event)=>{
-        const searchWord = event.target.value
-        const newFilter = data.filter((user)=>{
-          return user.name.toLowerCase().includes(searchWord.toLowerCase())
+    //     const newFilter = data.filter((user)=>{
+    //       return user.name.toLowerCase().includes(searchWord.toLowerCase())
+    //     })
+    //     if(searchWord === ''){
+    //         setDataUser(data)
+    //     }
+    //     else{
+    //         setDataUser(newFilter)
+    //     }
+    // }
+    const searchMember = (keyword) => {
+      const searchMember = data.filter((item) => item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1);
+      setDataUser(searchMember)
+  }
+    const removeItem = (id) => {
+        const removedData = data.filter((item) => item.id !== id);
+        setDataUser(removedData);
+    
+        notification['success']({
+            message: 'Deleted this member successfully',
+            duration: 3
         })
-        if(searchWord === ''){
-            setFilterData(data)
-        }
-        else{
-            setFilterData(newFilter)
-        }
     }
-    
   return (
     <div>
       <Row>
         <Col span={6}></Col>
         <Col span={12}>
           <List>
-            {filterData.map((item) => {
+            {data.map((item) => {
               return (
                 <div>
                 <List.Item>
@@ -37,7 +51,7 @@ export default function ListRender({data,removeItem}) {
           </List>
         </Col>
         <Col span={6}>
-            <input placeholder="search" onChange={handleFIlter}></input>
+            <input placeholder="search" onChange={(e)=>searchMember(e.target.value)}></input>
         </Col>
       </Row>
     </div>

@@ -1,67 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
-import ManagerMember from './components/ManagerMember';
-import ListRender from './components/List';
-import { dataUsers } from './person';
-import { useState } from 'react';
-import {notification} from 'antd'
+import logo from "./logo.svg";
+import "./App.css";
+import ManagerMember from "./components/ManagerMember";
+import ListRender from "./components/List";
 
+import AuthContext, { generateData, RemoveAllUser } from "./person";
+import { getUsers } from "./person";
+import { useState } from "react";
+import { notification } from "antd";
+
+generateData()
 function App() {
-
-  const [dataUser, setDataUser] = useState(dataUsers)
+  const [dataUser, setDataUser] = useState(getUsers());
   const [name, setName] = useState();
   const [age, setAge] = useState();
   const [gender, setGender] = useState();
   const [address, setAddress] = useState();
-  const [description, setDecription] = useState('')
-  const [phone,setPhone] = useState('')
-  const [hobby,setHobby] = useState('')
+  const [description, setDecription] = useState("");
+  const [phone, setPhone] = useState("");
+  const [hobby, setHobby] = useState("");
 
   const handleCreateUser = (event) => {
     event.preventDefault();
-    setDataUser((item) => [
-      ...item,
-      {
-        id: dataUser.length + 1,
-        name: name,
-        age: age,
-        gender: gender,
-        address: address,
-        description : description,
-        phone : phone
-      },
-    ]);
+    let newUser = {
+      id: dataUser.length + 1,
+      name: name,
+      age: age,
+      gender: gender,
+      address: address,
+      description: description,
+      phone: phone,
+    }
+    const userData = ([...dataUser,newUser])
+    setDataUser(userData)
+    localStorage.setItem('users',JSON.stringify(userData))
   };
 
 
-const confirmDelete = () => {
-  setDataUser([]);
-
-  notification["success"]({
-    message: "Deleted all member successfully",
-    duration: 3,
-  });
-};
-const cancelDelete = () => {
-  return;
-};
-
+  const confirmDelete = () => {
+    setDataUser([])
+    RemoveAllUser()
+    notification["success"]({
+      message: "Deleted all member successfully",
+      duration: 3,
+    });
+  };
+  const cancelDelete = () => {
+    return;
+  };
   return (
     <div className="App">
-      <ManagerMember 
-      confirmDelete={confirmDelete} 
-      cancelDelete={cancelDelete}
-      setName = {setName}
-      setAge = {setAge}
-      setGender = {setGender}
-      setAddress = {setAddress}
-      setDecription = {setDecription}
-      setPhone = {setPhone}
-      setHobby = {setHobby}
-      handleCreateUser = {handleCreateUser}/>
-      <ListRender 
-      data={dataUser}
-      setDataUser = {setDataUser}/>
+      <AuthContext.Provider value={{ dataUser, setDataUser}}>
+        {console.log('auth',dataUser)}
+        <ManagerMember
+          confirmDelete={confirmDelete}
+          cancelDelete={cancelDelete}
+          setName={setName}
+          setAge={setAge}
+          setGender={setGender}
+          setAddress={setAddress}
+          setDecription={setDecription}
+          setPhone={setPhone}
+          setHobby={setHobby}
+          handleCreateUser={handleCreateUser}
+        />
+        <ListRender />
+      </AuthContext.Provider>
     </div>
   );
 }

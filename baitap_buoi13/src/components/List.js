@@ -1,30 +1,29 @@
 import { Form, List } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ListUser from "./ListUser";
 import {Row,Col} from "antd"
 import {notification} from 'antd'
-import { dataUsers } from "../person";
+import AuthContext, { data, getUsers } from "../person";
 
-export default function ListRender({setDataUser,data}) {
-    // const handleFIlter = (event)=>{
-    //     const searchWord = event
+export default function ListRender() {
+  
+  const {dataUser,setDataUser} = useContext(AuthContext)
+ 
+    const handleFIlter = (event)=>{
+        const searchWord = event
     
-    //     const newFilter = data.filter((user)=>{
-    //       return user.name.toLowerCase().includes(searchWord.toLowerCase())
-    //     })
-    //     if(searchWord === ''){
-    //         setDataUser(data)
-    //     }
-    //     else{
-    //         setDataUser(newFilter)
-    //     }
-    // }
-    const searchMember = (keyword) => {
-      const searchMember = data.filter((item) => item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1);
-      setDataUser(searchMember)
-  }
+        const newFilter = dataUser.filter((user)=>{
+          return user.name.toLowerCase().includes(searchWord.toLowerCase())
+        })
+        if(searchWord === ''){
+          setDataUser(getUsers())
+        }
+        else{
+          setDataUser(newFilter)
+        }
+    }
     const removeItem = (id) => {
-        const removedData = data.filter((item) => item.id !== id);
+        const removedData = dataUser.filter((item) => item.id !== id);
         setDataUser(removedData);
     
         notification['success']({
@@ -34,11 +33,12 @@ export default function ListRender({setDataUser,data}) {
     }
   return (
     <div>
+      <h1>List</h1>
       <Row>
         <Col span={6}></Col>
         <Col span={12}>
           <List>
-            {data.map((item) => {
+            {dataUser.map((item) => {
               return (
                 <div>
                 <List.Item>
@@ -51,7 +51,7 @@ export default function ListRender({setDataUser,data}) {
           </List>
         </Col>
         <Col span={6}>
-            <input placeholder="search" onChange={(e)=>searchMember(e.target.value)}></input>
+            <input placeholder="search" onChange={(e)=>handleFIlter(e.target.value)}></input>
         </Col>
       </Row>
     </div>

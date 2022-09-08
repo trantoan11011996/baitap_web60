@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { BsFillCartCheckFill, BsHandIndexFill } from "react-icons/bs";
 import { AuthContext } from "../data";
+import "../css/product.css"
 
 export default function CartProduct() {
   const [show, setShow] = useState(false);
@@ -75,8 +76,8 @@ export default function CartProduct() {
                         className="img-food w-100"
                       ></img>
                     </Col>
-                    <Col sm={6}>
-                      <h3>{product.product}</h3>
+                    <Col className="product-name" sm={6}>
+                      <p>{product.product}</p>
                       <div>
                         <Badge bg="primary" className="me-4">
                           ${product.price}

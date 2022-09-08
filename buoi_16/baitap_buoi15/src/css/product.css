@@ -2,3 +2,12 @@
     padding-bottom: 30px;
     margin-top: 80px;
 }
+.cart-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.product-name{
+    font-size: 15px;
+    font-weight: 500;
+}

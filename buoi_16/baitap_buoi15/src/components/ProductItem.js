@@ -12,7 +12,7 @@ export default function ProductItem({ product }) {
             {product.description}
         </Card.Text>
         <Card.Text>
-            price : {product.price}
+            price : ${product.price}
         </Card.Text>
         <Button variant="primary" onClick={()=>addtoCart(product)}>Buy Now!!!</Button>
       </Card.Body>
